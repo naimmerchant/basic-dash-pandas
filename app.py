@@ -11,7 +11,7 @@ from plotly.graph_objs import *
 ####### Set up your app #####
 app = dash.Dash(__name__)
 server = app.server
-app.title='Titanic!'
+app.title='Whatever I want!'
 app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"})
 
 ###### Import a dataframe #######
