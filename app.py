@@ -16,8 +16,8 @@ app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"
 
 ###### Import a dataframe #######
 df = pd.read_csv("https://raw.githubusercontent.com/austinlasseter/plotly_dash_tutorial/master/00%20resources/titanic.csv")
-results = df.groupby('Sex')['Age'].mean()
-colors_list=['blue', 'green', 'orange', 'red', 'yellow']
+
+colors_list=['Age', 'Fare', 'Survived', 'Pclass']
 
 
 
@@ -38,10 +38,11 @@ app.layout = html.Div([
 ######### Interactive callbacks go here #########
 @app.callback(dash.dependencies.Output('display-value', 'figure'),
               [dash.dependencies.Input('dropdown', 'value')])
-def display_value(color_you_chose):
+def display_value(user_input):
+    results = df.groupby('Sex')[user_input].mean()
     mydata = [go.Bar(x = results.index,
                      y = results.values,
-                     marker = dict(color=color_you_chose))]
+                     marker = dict(color='blue'))]
     mylayout = go.Layout(title = 'This is a cool bar chart',
                          xaxis = dict(title='this is my x-axis'),
                          yaxis = dict(title='this is my y-axis'))
