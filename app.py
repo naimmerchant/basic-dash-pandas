@@ -11,20 +11,20 @@ from plotly.graph_objs import *
 ####### Set up your app #####
 app = dash.Dash(__name__)
 server = app.server
-app.title='Whatever I want!'
+app.title='Election Results'
 app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"})
 
 ###### Import a dataframe #######
 df = pd.read_csv("https://raw.githubusercontent.com/naimmerchant/basic-dash-pandas/master/NC_PrecinctData.csv")
 
-colors_list=['Age', 'Fare', 'Survived', 'Pclass']
+colors_list=list(df['county_name'].value_counts().index)
 
 
 
 
 ####### Layout of the app ########
 app.layout = html.Div([
-    html.H3('Choose a color from the list:'),
+    html.H3('Choose a category:'),
     dcc.Dropdown(
         id='dropdown',
         options=[{'label': i, 'value': i} for i in colors_list],
@@ -39,13 +39,14 @@ app.layout = html.Div([
 @app.callback(dash.dependencies.Output('display-value', 'figure'),
               [dash.dependencies.Input('dropdown', 'value')])
 def display_value(user_input):
-    results = df.groupby('Sex')[user_input].mean()
+    df1 = df.loc[df['county_name']==user_input]
+    results = df1.groupby('party')['votes'].sum()
     mydata = [go.Bar(x = results.index,
-                     y = results.values,
-                     marker = dict(color='blue'))]
-    mylayout = go.Layout(title = 'This is a cool bar chart',
-                         xaxis = dict(title='this is my x-axis'),
-                         yaxis = dict(title='this is my y-axis'))
+                 y = results.values,
+                 marker = dict(color='blue'))]
+    mylayout = go.Layout(title = 'Election Results',
+                     xaxis = dict(title='Category'),
+                     yaxis = dict(title='Total Votes'))
     myfig = go.Figure(data=mydata, layout=mylayout)
     return myfig
 
