@@ -15,7 +15,7 @@ app.title='Whatever I want!'
 app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"})
 
 ###### Import a dataframe #######
-df = pd.read_csv("https://raw.githubusercontent.com/austinlasseter/plotly_dash_tutorial/master/00%20resources/titanic.csv")
+df = pd.read_csv("https://raw.githubusercontent.com/naimmerchant/basic-dash-pandas/master/NC_PrecinctData.csv")
 
 colors_list=['Age', 'Fare', 'Survived', 'Pclass']
 
